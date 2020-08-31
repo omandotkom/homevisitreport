@@ -21,7 +21,7 @@ class CreateVisitsTable extends Migration
             $table->date("tanggal");
             $table->string("tempat");
             $table->text("hasil");
-            $table->text("foto");
+            $table->text("foto")->nullable();
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@
         <h3 class="card-text m-5"><strong>LAPORAN KEGIATAN HOME VISIT PEMERLU PELAYANAN KESEJAHTERAAN<strong></h3>
         <hr>
         </hr>
-        <a href="#" class="btn btn-dark"><i class="fas fa-chevron-circle-right"></i> Selanjutnya</a>
+        <a href="{{route('index-laporan')}}" class="btn btn-dark"><i class="fas fa-chevron-circle-right"></i> Selanjutnya</a>
     </div>
     <div class="card-footer text-muted">
         <label id="date-part"></label> <label id="time-part"></label>

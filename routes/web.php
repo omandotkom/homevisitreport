@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
@@ -23,6 +20,8 @@ Route::get('/home', function() {
     return view('home');
 })->name('home')->middleware('auth');
 
-Route::get('/rumah',function(){
+Route::get('/laporan','ReportController@index')->name('index-laporan');
+Route::post('/laporan','ReportController@store')->name('store-laporan');
+Route::get('/',function(){
     return view('main');
 });
