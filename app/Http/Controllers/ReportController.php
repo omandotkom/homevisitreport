@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Officer;
+use App\Visit;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        Log::debug('An informational message.');
-        return view('reportform');
+        //showlast 10 data
+        $visits = Visit::select("id","nama","namakegiatan","tanggal","created_at","updated_at")->orderBy("created_at","desc")->get();
+        return view('report',['visits'=> $visits]);
     }
 
     /**
@@ -35,15 +37,27 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+        $visit = new Visit();
+        $visit->nama = $request->nama;
+        $visit->namakegiatan = $request->namakegiatan;
+        $visit->tujuan = $request->tujuan;
+        $visit->tanggal = $request->tanggal;
+        $visit->tempat = $request->tempat;
+        $visit->hasil = $request->hasil;
+        if (isset($request->foto)) {
+            $imageName = time() . '.' . $request->foto->getClientOriginalExtension();
+            request()->foto->move(public_path('images/foto'), $imageName);
+            $visit->foto = asset('images/foto/' . $imageName);
+        }
+        $visit->save();
 
         foreach ($request->addmore as $key => $value) {
             //ProductStock::create($value);
-            $value["visit_id"] = 99;
-           // Log::debug($value["nama"]);
-       
-          Officer::create($value);
-            
+            $value["visit_id"] = $visit->id;
+            // Log::debug($value["nama"]);
+            Officer::create($value);
         }
+        return redirect()->route('list-laporan');
     }
 
     /**

@@ -16,12 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', function() {
-    return view('home');
-})->name('home')->middleware('auth');
-
-Route::get('/laporan','ReportController@index')->name('index-laporan');
-Route::post('/laporan','ReportController@store')->name('store-laporan');
-Route::get('/',function(){
+Route::get('/laporan', function () {
+    return view('reportform');
+})->name('index-laporan');
+Route::post('/laporan', 'ReportController@store')->name('store-laporan');
+Route::get('/', function () {
     return view('main');
 });
+Route::get('/laporan/list','ReportController@index')->name("list-laporan");

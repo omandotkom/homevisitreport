@@ -14,7 +14,7 @@
     </div>--}}
     <div class="card-body">
         <div class="d-flex align-items-end flex-column bd-highlight mb-3" >
-            <div class="p-2 bd-highlight"><a href="#" class="badge badge-pill badge-success"><i class="fas fa-table"></i> Lihat Data</a></div>
+            <div class="p-2 bd-highlight"><a href="{{route('list-laporan')}}" class="badge badge-pill badge-success"><i class="fas fa-table"></i> Lihat Data</a></div>
         </div>
         <hr>
         </hr>

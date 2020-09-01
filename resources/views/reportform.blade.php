@@ -11,7 +11,7 @@
     <h5 class="card-header">Formulir Laporan Home Visit</h5>
     <div class="card-body">
 
-        <form class="w-100" action="{{route('store-laporan')}}" method="POST">
+        <form class="w-100" action="{{route('store-laporan')}}" enctype="multipart/form-data" method="POST">
             @csrf
             <div class="form-group">
                 <label for="nama">Nama Pemerlu Perjalanan</label>
@@ -59,7 +59,7 @@
             </div>
             <div class="form-group">
                 <label for="Foto">Foto Kegiatan</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                <input type="file" class="form-control-file" name="foto" id="foto">
             </div>
             <hr></hr>
             <button type="submit" class="btn btn-dark float-right"><i class="far fa-save"></i> Simpan</button>
@@ -77,7 +77,7 @@
     var i = 0;
     $("#add").click(function() {
         ++i;
-        $("#dynamicTable").append('<tr><td><input type="text" name="addmore[' + i + '][nama]" placeholder="Agustinus" class="form-control" /></td><td><input type="text" name="addmore[' + i + '][nip]" placeholder="9049129" class="form-control" /></td><td><input type="text" name="addmore[' + i + '][jabatan]" placeholder="Staff Keuangan" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fas fa-minus-circle"></i> Hapus</button></td></tr>');
+        $("#dynamicTable").append('<tr><td><input type="text" name="addmore[' + i + '][nama]" placeholder="Agustinus" class="form-control" /></td><td><input type="text" name="addmore[' + i + '][nip]" placeholder="9049129" class="form-control" /></td><td><input type="text" name="addmore[' + i + '][jabatan]" placeholder="Staff Keuangan" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fas fa-minus-circle"></i></button></td></tr>');
     });
     $(document).on('click', '.remove-tr', function() {
         $(this).parents('tr').remove();
