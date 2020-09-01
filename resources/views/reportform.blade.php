@@ -11,7 +11,7 @@
     <h5 class="card-header">Formulir Laporan Home Visit</h5>
     <div class="card-body">
 
-        <form class="w-100" @if(isset($visit)) action="{{route('update-laporan',$visit->id)}}" @else action="{{route('store-laporan')}}" @endif enctype="multipart/form-data" method="POST">
+        <form id="form-laporan" class="w-100" @if(isset($visit)) action="{{route('update-laporan',$visit->id)}}" @else action="{{route('store-laporan')}}" @endif enctype="multipart/form-data" method="POST">
             @csrf
             <div class="form-group">
                 <label for="nama">Nama Pemerlu Perjalanan</label>
@@ -95,7 +95,7 @@
             </hr>
             <div class="btn-group float-right" role="group" aria-label="Action Button">
                 @if(isset($visit))
-                <button type="submit" class="btn btn-dark float-right mr-2"><i class="fas fa-print"></i> Print</button>
+                <button type="button" class="btn btn-dark float-right mr-2" id="print" ><i class="fas fa-print"></i> Print</button>
                 @endif
                 <button type="submit" class="btn btn-dark float-right"><i class="far fa-save"></i> Simpan</button>
 
@@ -112,7 +112,16 @@
 @section('js')
 <script type="text/javascript">
     //nanti in dicek
-
+    
+    @if(isset($visit))
+    
+    $("#print").click(function(){
+        let actionURL = "{{route('print',$visit->id)}}";
+        document.getElementById("form-laporan").action = actionURL;
+        document.getElementById("form-laporan").submit();
+        
+    });
+    @endif
     $("#add").click(function() {
         var i = document.getElementById("dynamicTable").rows.length;
         if (i >= 2) {
