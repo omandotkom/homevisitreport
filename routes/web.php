@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/laporan/list','ReportController@index')->name("list-laporan");
+Route::get('/home',function(){
+    return view('main');   
+})->name('home');
 Route::get('/laporan', function () {
     return view('reportform');
 })->name('index-laporan');
@@ -23,4 +27,5 @@ Route::post('/laporan', 'ReportController@store')->name('store-laporan');
 Route::get('/', function () {
     return view('main');
 });
-Route::get('/laporan/list','ReportController@index')->name("list-laporan");
+Route::get('/laporan/edit/{id}','ReportController@edit')->name('edit-laporan');
+Route::post('/laporan/edit/{id?}','ReportController@update')->name('update-laporan');

@@ -68,9 +68,7 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
+     }
     /**
      * Show the form for editing the specified resource.
      *
@@ -79,7 +77,9 @@ class ReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        $visit = Visit::findOrFail($id);
+        return view('reportform',['edit'=>true,'visit'=>$visit]);
+    
     }
 
     /**
@@ -91,7 +91,31 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //hapus dulu officers nya bedasarkan id visit
+        $deletedRows = Officer::where('visit_id', $id)->delete();
+        $visit = Visit::findOrFail($id);
+        $visit->nama = $request->nama;
+        $visit->namakegiatan = $request->namakegiatan;
+        $visit->tujuan = $request->tujuan;
+        $visit->tanggal = $request->tanggal;
+        $visit->tempat = $request->tempat;
+        $visit->hasil = $request->hasil;
+        if (isset($request->foto)) {
+            $imageName = time() . '.' . $request->foto->getClientOriginalExtension();
+            request()->foto->move(public_path('images/foto'), $imageName);
+            $visit->foto = asset('images/foto/' . $imageName);
+        }
+        $visit->nosurat = $request->nosurat;
+        $visit->dipa = $request->dipa;
+        $visit->save();
+        
+        foreach ($request->addmore as $key => $value) {
+            //ProductStock::create($value);
+            $value["visit_id"] = $visit->id;
+            // Log::debug($value["nama"]);
+            Officer::create($value);
+        }
+return redirect()->route('list-laporan');
     }
 
     /**

@@ -27,7 +27,7 @@
                     <td>{{$visit->namakegiatan}}</td>
                     <td>{{$visit->tanggal}}</td>
                     <td>{{$visit->updated_at}}</td>
-                    <td><a href="#" class="badge badge-success"><i class="fas fa-plus-circle"></i></a></td>
+                    <td><a href="{{route('edit-laporan',['id'=>$visit->id])}}" class="badge badge-success"><i class="fas fa-plus-circle"></i></a></td>
                 </tr>
                 @endforeach
             </tbody>
