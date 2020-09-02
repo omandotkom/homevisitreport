@@ -7,6 +7,7 @@ use App\Visit;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use PDF;
+use Illuminate\Support\Facades\URL;
 class ReportController extends Controller
 {
     /**
@@ -129,6 +130,15 @@ class ReportController extends Controller
     public function print(Request $request, $id){
         $visit = Visit::findOrFail($id);
         $pdf = PDF::loadView('print',['visit'=>$visit]);
+        return $pdf->stream();   
+        //return view('print',['visit'=>$visit]);
+    }
+    public function printsementara($id){
+        Log::debug(URL::to('/'));
+        
+        $visit = Visit::findOrFail($id);
+        $foto = public_path().str_replace(URL::to('/'),"",$visit->foto);
+        $pdf = PDF::loadView('print',['visit'=>$visit,'foto'=>$foto]);
         return $pdf->stream();   
         //return view('print',['visit'=>$visit]);
     }

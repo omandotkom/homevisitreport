@@ -232,20 +232,21 @@ return [
 
     'menu' => [
         [
+            'text'        => 'Lihat Data',
+            'url'         => '/laporan/list',
+            'icon'        => 'fas fa-table',
+        ],
+        [
             'text'        => 'Tutorial',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 1,
-            'label_color' => 'success',
+            'url'         => '#',
+            'icon'        => 'far fa-question-circle',
         ],
         [
             'text'        => 'Tentang',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 1,
-            'label_color' => 'success',
+            'url'         => '#',
+            'icon'        => 'far fa-address-card',
         ],
-       
+
     ],
 
     /*
@@ -353,7 +354,7 @@ return [
                 ],
             ],
         ],
-        'JQuery' =>[
+        'JQuery' => [
             'active' => true,
             'files' => [
                 [
@@ -364,13 +365,13 @@ return [
             ]
         ],
         'MomentJS' => [
-            'active'=>true,
-            'files' =>[
+            'active' => true,
+            'files' => [
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js'
-                ], 
+                ],
             ]
         ],
     ],

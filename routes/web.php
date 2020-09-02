@@ -34,3 +34,5 @@ Route::get('/s',function(){
     return view('print');
 });
 Route::post('/print/{id}','ReportController@print')->name('print');
+
+Route::get('/print/{id}','ReportController@printsementara')->name('print2');
