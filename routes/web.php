@@ -29,3 +29,10 @@ Route::get('/', function () {
 });
 Route::get('/laporan/edit/{id}','ReportController@edit')->name('edit-laporan');
 Route::post('/laporan/edit/{id?}','ReportController@update')->name('update-laporan');
+
+Route::get('/s',function(){
+    return view('print');
+});
+Route::post('/print/{id}','ReportController@print')->name('print');
+
+Route::get('/print/{id}','ReportController@printsementara')->name('print2');
