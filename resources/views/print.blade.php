@@ -80,7 +80,7 @@
       <td></td>
       <td></td>
       <td>Pada Tanggal</td>
-      <td>: date("m.d.Y")</td>
+      <td>: {{date("m.d.Y")}}</td>
     </tr>
     <tr>
       <td colspan="2" class="text-center mt-3">Mengetahui<br>Kepala Seksi Layanan Rehabilitasi Sosial</td>
