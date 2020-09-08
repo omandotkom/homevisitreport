@@ -20,7 +20,7 @@
       <dt>B. Nama Pemerlu Pelayanan</dt>
       <dd>{{$visit->nama}}</dd>
       <dt>C. Tujuan</dt>
-      <dd>{{$visit->tujuan}}</dd>
+      <dd>{!!nl2br($visit->tujuan)!!}</dd>
       <dt>D. Dasar Kegiatan</dt>
       <dd>Surat Tugas Nomor {{$visit->nomorsurat}} tentang pelaksanaan Kegiatan Home Visit Pemerlu Pelayanan Kesejahteraan Sosial atas nama {{$visit->nama}} Daftar Isian Pelaksanaan Anggaran (DIPA) BRSKP NAPZA "Satria" di Baturraden No : {{$visit->dipa}}</dd>
       <dt>E. Waktu & Tempat</dt>
@@ -38,7 +38,7 @@
           <td style="width:1px">{{$visit->tempat}}</td>
         </tr>
       </table>
-      
+
       <dt>F. Petugas Pelaksana</dt>
       <table class="table table-responsive-sm table-sm text-left table-borderless">
 
@@ -64,36 +64,42 @@
         @endforeach
       </table>
       <dt>G. Hasil</dt>
-      <dd>{{$visit->hasil}}</dd>
-      <dt>H. Penutup</dt>
+      <dd>{!!nl2br($visit->hasil)!!}</dd>
+      <dt>H. Lampiran Foto Kegiatan</dt>
+      <dd>
+        @if($fotoexist)
+        <img src="{{$foto}}" class="rounded img-fluid mb-2 w-25 mx-auto d-block" alt="foto kegiatan">
+        @endif
+      </dd>
+      <dt>I. Penutup</dt>
       <dd>Demikian laporan Kegiatan Home Visit Pemerlu Pelayanan Kesejahteraan Sosial ataas nama {{$visit->nama}} ini dibuat sebagai bahan pertanggungjawaban kegiatan dan dapat digunakan sebagaiana mestinya.</dd>
       <table class="table mt-5 p-0 w-100 table-responsive-sm table-sm table-borderless">
-  <thead> 
-  <tbody>
-    <tr>
-      <td class="w-25"></td>
-      <td class="w-25"></td>
-      <td class="w-auto">Dibuat</td>
-      <td class="w-auto">: Baturraden</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td>Pada Tanggal</td>
-      <td>: {{date("m.d.Y")}}</td>
-    </tr>
-    <tr>
-      <td colspan="2" class="text-center mt-3">Mengetahui<br>Kepala Seksi Layanan Rehabilitasi Sosial</td>
-      <td colspan="2" class="text-center align-middle">Yang Melaporkan</td>
-    </tr>
-    <tr>
-      <td colspan="2" class="text-center align-text-bottom"><br><br><br>Hendra Permana, S.Sos M.Si</td>
-      <td colspan="2" class="text-center align-text-bottom"><br><br><br>.......</td>
-    </tr>
-  </tbody>
-</table>
+        <thead>
+        <tbody>
+          <tr>
+            <td class="w-25"></td>
+            <td class="w-25"></td>
+            <td class="w-auto">Dibuat</td>
+            <td class="w-auto">: Baturraden</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Pada Tanggal</td>
+            <td>: {{date("m.d.Y")}}</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text-center mt-3">Mengetahui<br>Kepala Seksi Layanan Rehabilitasi Sosial</td>
+            <td colspan="2" class="text-center align-middle">Yang Melaporkan</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text-center align-text-bottom"><br><br><br>Hendra Permana, S.Sos M.Si</td>
+            <td colspan="2" class="text-center align-text-bottom"><br><br><br>.......</td>
+          </tr>
+        </tbody>
+      </table>
     </dl>
-    
+
   </div>
 
 

@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label for="namakegiatan">Nama Kegiatan</label>
-                <input required type="text" class="form-control" id="namakegiatan" @if(isset($visit)) value="{{$visit->namakegiatan}}" @endif name="namakegiatan" placeholder="Berjunjung ke rumah X">
+                <input required type="text" class="form-control" id="namakegiatan" @if(isset($visit)) value="{{$visit->namakegiatan}}" @endif name="namakegiatan" placeholder="Berjunjung ke ...">
             </div>
             <div class="form-group">
                 <label for="tujuan">Tujuan</label>
@@ -77,7 +77,7 @@
             <div class="form-group">
                 <label for="Foto">Foto Kegiatan</label>
                 @if(isset($visit->foto))
-                <img src="{{$visit->foto}}"  class="rounded img-fluid mb-2 w-25 mx-auto d-block" alt="foto kegiatan">
+                <img src="{{$visit->foto}}" class="rounded img-fluid mb-2 w-25 mx-auto d-block" alt="foto kegiatan">
                 @endif
                 <input type="file" class="form-control-file mx-auto d-block" name="foto" id="foto">
             </div>
@@ -95,7 +95,12 @@
             </hr>
             <div class="btn-group float-right" role="group" aria-label="Action Button">
                 @if(isset($visit))
-                <button type="button" class="btn btn-dark float-right mr-2" id="print" ><i class="fas fa-print"></i> Print</button>
+                @if($visit->dipa != null && $visit->nosurat !=null)
+                <button type="button" class="btn btn-dark float-right mr-2" id="print"><i class="fas fa-print"></i> Print</button>
+                @else
+                <label class="mr-3">Lengkapi DiPA & Nomor Surat untuk print</label>
+                
+                @endif
                 @endif
                 <button type="submit" class="btn btn-dark float-right"><i class="far fa-save"></i> Simpan</button>
 
@@ -112,14 +117,14 @@
 @section('js')
 <script type="text/javascript">
     //nanti in dicek
-    
+
     @if(isset($visit))
-    
-    $("#print").click(function(){
+
+    $("#print").click(function() {
         let actionURL = "{{route('print',$visit->id)}}";
         document.getElementById("form-laporan").action = actionURL;
         document.getElementById("form-laporan").submit();
-        
+
     });
     @endif
     $("#add").click(function() {

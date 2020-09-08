@@ -110,6 +110,7 @@ class ReportController extends Controller
 
         foreach ($request->addmore as $key => $value) {
             //ProductStock::create($value);
+            
             $value["visit_id"] = $visit->id;
             // Log::debug($value["nama"]);
             Officer::create($value);
@@ -129,7 +130,15 @@ class ReportController extends Controller
     }
     public function print(Request $request, $id){
         $visit = Visit::findOrFail($id);
-        $pdf = PDF::loadView('print',['visit'=>$visit]);
+        if ($visit->foto === null){
+            $fotoexists = false;
+        }else{
+            $fotoexists = true;
+        }
+
+        $foto = public_path().str_replace(URL::to('/'),"",$visit->foto);
+        $pdf = PDF::loadView('print',['visit'=>$visit,'foto'=>$foto,'fotoexist'=>$fotoexists]);
+        
         return $pdf->stream();   
         //return view('print',['visit'=>$visit]);
     }
@@ -137,8 +146,14 @@ class ReportController extends Controller
         Log::debug(URL::to('/'));
         
         $visit = Visit::findOrFail($id);
+        if ($visit->foto === null){
+            $fotoexists = false;
+        }else{
+            $fotoexists = true;
+        }
+
         $foto = public_path().str_replace(URL::to('/'),"",$visit->foto);
-        $pdf = PDF::loadView('print',['visit'=>$visit,'foto'=>$foto]);
+        $pdf = PDF::loadView('print',['visit'=>$visit,'foto'=>$foto,'fotoexist'=>$fotoexists]);
         return $pdf->stream();   
         //return view('print',['visit'=>$visit]);
     }
