@@ -18,7 +18,7 @@
         </div>
         <hr>
         </hr>
-        <h3 class="card-text m-5"><strong>LAPORAN KEGIATAN HOME VISIT PEMERLU PELAYANAN KESEJAHTERAAN<strong></h3>
+        <h3 class="card-text m-5"><strong>Laporan Kegiatan BRSKPN Satria Baturaden<strong></h3>
         <hr>
         </hr>
         <a href="{{route('index-laporan')}}" class="btn btn-dark"><i class="fas fa-chevron-circle-right"></i> Selanjutnya</a>

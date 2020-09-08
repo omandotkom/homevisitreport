@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'HVR',
+    'title' => 'BRSKPN SATRIA',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>HV</b>Report',
+    'logo' => '<b>BRSKPN SATRIA<b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -236,16 +236,8 @@ return [
             'url'         => '/laporan/list',
             'icon'        => 'fas fa-table',
         ],
-        [
-            'text'        => 'Tutorial',
-            'url'         => '#',
-            'icon'        => 'far fa-question-circle',
-        ],
-        [
-            'text'        => 'Tentang',
-            'url'         => '#',
-            'icon'        => 'far fa-address-card',
-        ],
+        
+       
 
     ],
 
