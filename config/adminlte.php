@@ -232,7 +232,7 @@ return [
 
     'menu' => [
         [
-            'text'        => 'Lihat Data',
+            'text'        => 'Daftar Laporan',
             'url'         => '/laporan/list',
             'icon'        => 'fas fa-table',
         ],
