@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="card w-50 mx-auto">
-    <h5 class="card-header">Formulir Laporan Home Visit</h5>
+    <h5 class="card-header">Formulir Laporan Kegiatan</h5>
     <div class="card-body">
 
         <form id="form-laporan" class="w-100" @if(isset($visit)) action="{{route('update-laporan',$visit->id)}}" @else action="{{route('store-laporan')}}" @endif enctype="multipart/form-data" method="POST">
@@ -19,7 +19,7 @@
     </div>--}}
     <div class="form-group">
         <label for="namakegiatan">Nama Kegiatan</label>
-        <input required type="text" class="form-control" id="namakegiatan" @if(isset($visit)) value="{{$visit->namakegiatan}}" @endif name="namakegiatan" placeholder="Berjunjung ke ...">
+        <input required type="text" class="form-control" id="namakegiatan" @if(isset($visit)) value="{{$visit->namakegiatan}}" @endif name="namakegiatan" placeholder="Berkunjung ke ...">
     </div>
     <div class="form-group">
         <label for="tujuan">Tujuan</label>
