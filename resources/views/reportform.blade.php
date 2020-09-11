@@ -25,6 +25,10 @@
         <label for="tujuan">Tujuan</label>
         <textarea required class="form-control" id="tujuan" name="tujuan" rows="6">@if(isset($visit)){{$visit->tujuan}}@endif</textarea>
     </div>
+    <div class="form-group">
+        <label for="dasar">Dasar Kegiatan</label>
+        <textarea required class="form-control" id="dasar" name="dasar" rows="6">@if(isset($visit)){{$visit->dasar}}@endif</textarea>
+    </div>
 
     <div class="form-group">
         <label for="tanggal">Hari & Tanggal (Dari)</label>

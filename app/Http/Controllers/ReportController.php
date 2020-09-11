@@ -102,6 +102,7 @@ class ReportController extends Controller
         $visit->hasil = $request->hasil;
         $visit->tanggalend = $request->tanggalend;
         $visit->penutup = $request->penutup;
+        $visit->dasar = $request->dasar;
         if (isset($request->foto)) {
             $imageName = time() . '.' . $request->foto->getClientOriginalExtension();
             request()->foto->move(public_path(), $imageName);

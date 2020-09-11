@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Visit extends Model
 {
     protected $table = "visits";
-    protected $fillable = ["nama","namakegiatan","tujuan","tanggal","tempat","hasil","foto","nosurat","dipa","foto2","penutup","tanggalend"];
+    protected $fillable = ["nama","namakegiatan","tujuan","tanggal","tempat","hasil","foto","nosurat","dipa","foto2","penutup","tanggalend","dasar"];
     function officers(){
         return $this->hasMany('App\Officer','visit_id','id');
     }
