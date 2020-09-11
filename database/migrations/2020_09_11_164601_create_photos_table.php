@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFoto2ToVisits extends Migration
+class CreatePhotosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddFoto2ToVisits extends Migration
      */
     public function up()
     {
-        Schema::table('visits', function (Blueprint $table) {
-            $table->string("foto2")->nullable();
+        Schema::create('photos', function (Blueprint $table) {
+            $table->id();
+            $table->integer("visit_id");
+            $table->text("photo");
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddFoto2ToVisits extends Migration
      */
     public function down()
     {
-        Schema::table('visits', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('photos');
     }
 }

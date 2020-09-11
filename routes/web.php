@@ -36,3 +36,4 @@ Route::get('/s',function(){
 Route::post('/print/{id}','ReportController@print')->name('print');
 
 Route::get('/print/{id}','ReportController@printsementara')->name('printreport');
+Route::get('/photo/delete/{id}','ReportController@photoDestroy')->name('deletephoto');

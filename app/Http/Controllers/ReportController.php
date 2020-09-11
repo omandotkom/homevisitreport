@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Know;
 use App\Officer;
+use App\Photo;
 use App\Reporter;
 use App\Visit;
 use Illuminate\Support\Facades\Log;
@@ -43,6 +44,8 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+
+       
         $visit = new Visit();
         $visit = $this->save($visit, $request);
         foreach ($request->addmore as $key => $value) {
@@ -82,6 +85,7 @@ class ReportController extends Controller
     public function edit($id)
     {
         $visit = Visit::findOrFail($id);
+        
         return view('reportform', ['edit' => true, 'visit' => $visit]);
     }
 
@@ -94,6 +98,7 @@ class ReportController extends Controller
      */
     private function save(Visit $visit, Request $request)
     {
+
         $visit->nama = $request->nama;
         $visit->namakegiatan = $request->namakegiatan;
         $visit->tujuan = $request->tujuan;
@@ -103,24 +108,18 @@ class ReportController extends Controller
         $visit->tanggalend = $request->tanggalend;
         $visit->penutup = $request->penutup;
         $visit->dasar = $request->dasar;
-        if (isset($request->foto)) {
-            $imageName = time() . '.' . $request->foto->getClientOriginalExtension();
-            request()->foto->move(public_path(), $imageName);
-            $visit->foto = $imageName;
-        }
-        if (isset($request->foto2)) {
-            $imageName = time() . '.' . $request->foto2->getClientOriginalExtension();
-            request()->foto2->move(public_path(), $imageName);
-            $visit->foto2 = $imageName;
-        }
-        if (isset($request->nosurat)) {
-            $visit->nosurat = $request->nosurat;
-        }
-        if (isset($request->dipa)) {
-            $visit->dipa = $request->dipa;
-        }
-        $visit->save();
 
+
+
+        $visit->save();
+        if (isset($request->foto)){
+        foreach ($request->foto as $foto) {
+            $fotoPath = $foto->store("upload", "public");
+            $fotodb = new Photo();
+            $fotodb->visit_id = $visit->id;
+            $fotodb->photo = $fotoPath;
+            $fotodb->save();
+        }}
         return $visit;
     }
     public function update(Request $request, $id)
@@ -158,7 +157,13 @@ class ReportController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+    }
+    public function photoDestroy($id){
+        $foto = Photo::findOrFail($id);
+        $foto->delete();
+
+        return back();
     }
     public function print(Request $request, $id)
     {
