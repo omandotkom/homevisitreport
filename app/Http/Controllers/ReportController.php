@@ -23,6 +23,7 @@ class ReportController extends Controller
     {
         //showlast 10 data
         $visits = Visit::select("id", "nama", "namakegiatan", "tanggal", "created_at", "updated_at")->orderBy("created_at", "desc")->get();
+        Log::debug(Carbon::parse('2019-03-01')->translatedFormat('l, d F Y')); //Output: "01 Maret 2019");
         return view('report', ['visits' => $visits]);
     }
 
@@ -51,16 +52,16 @@ class ReportController extends Controller
             Officer::create($value);
         }
         $know = new Know();
-        $know->id_visit = $visit->id;
+        $know->visit_id = $visit->id;
         $know->nama = $request->mengetahuinama;
         $know->jabatan = $request->mengetahuijabatan;
         $know->save();
         $rep = new Reporter();
-        $rep->id_visit = $visit->id;
+        $rep->visit_id = $visit->id;
         $rep->nama = $request->melaporkannama;
         $rep->jabatan = $request->melaporkanjabatan;
         $rep->save();
-        
+
         return redirect()->route('list-laporan');
     }
 
@@ -118,7 +119,7 @@ class ReportController extends Controller
             $visit->dipa = $request->dipa;
         }
         $visit->save();
-        
+
         return $visit;
     }
     public function update(Request $request, $id)
@@ -134,17 +135,17 @@ class ReportController extends Controller
             // Log::debug($value["nama"]);
             Officer::create($value);
         }
-        $know = Know::where('visit_id',$visit->id);
+        $know = Know::where('visit_id', $visit->id)->first();
         $know->visit_id = $visit->id;
         $know->nama = $request->mengetahuinama;
         $know->jabatan = $request->mengetahuijabatan;
         $know->save();
-        $rep = Reporter::where('visit_id',$visit->id);
+        $rep = Reporter::where('visit_id', $visit->id)->first();
         $rep->visit_id = $visit->id;
         $rep->nama = $request->melaporkannama;
         $rep->jabatan = $request->melaporkanjabatan;
         $rep->save();
-        
+
         return redirect()->route('list-laporan');
     }
 

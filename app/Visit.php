@@ -12,12 +12,12 @@ class Visit extends Model
         return $this->hasMany('App\Officer','visit_id','id');
     }
     function knows(){
-        return $this->hasMany('App\Know','visit_id','id');
+        return $this->hasOne('App\Know','visit_id','id');
      
     }
     
     function reporters(){
-        return $this->hasMany('App\Reporter','visit_id','id');
+        return $this->hasOne('App\Reporter','visit_id','id');
      
     }
 }

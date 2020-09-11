@@ -29,10 +29,16 @@
     <div class="form-group">
         <label for="tanggal">Hari & Tanggal (Dari)</label>
         <input required type="date" class="form-control" id="tanggal" @if(isset($visit)) value="{{$visit->tanggal}}" @endif name="tanggal">
+        @if(isset($visit))
+        <small>{{Carbon\Carbon::parse($visit->tanggal)->translatedFormat('l, d F Y')}}</small>
+        @endif
     </div>
     <div class="form-group">
         <label for="tanggalend">Hari & Tanggal (Sampai)</label>
         <input required type="date" class="form-control" id="tanggalend" @if(isset($visit)) value="{{$visit->tanggalend}}" @endif name="tanggalend">
+        @if(isset($visit))
+        <small>{{Carbon\Carbon::parse($visit->tanggalend)->translatedFormat('l, d F Y')}}</small>
+        @endif
     </div>
     <div class="form-group">
         <label>Petugas Pelaksana</label>
@@ -134,7 +140,8 @@
     <label for="mengetahuijabatan">Jabatan</label>
     <input required type="text" class="form-control" id="mengetahuijabatan" @if(isset($visit)) value="{{$visit->knows->jabatan}}" @endif name="mengetahuijabatan">
 </div>
-<hr></hr>
+<hr>
+</hr>
 <div class="form-group">
     <h5>Yang Melaporkan</h5>
     <label for="melaporkannama">Nama</label>
@@ -144,7 +151,8 @@
     <label for="melaporkanjabatan">Jabatan</label>
     <input required type="text" class="form-control" id="melaporkanjabatan" @if(isset($visit)) value="{{$visit->reporters->jabatan}}" @endif name="melaporkanjabatan">
 </div>
-<hr></hr>
+<hr>
+</hr>
 <div class="btn-group float-right" role="group" aria-label="Action Button">
     <button type="submit" class="btn btn-dark float-right"><i class="far fa-save"></i> Simpan</button>
 </div>

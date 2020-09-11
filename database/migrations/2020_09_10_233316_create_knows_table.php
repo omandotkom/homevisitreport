@@ -15,7 +15,7 @@ class CreateKnowsTable extends Migration
     {
         Schema::create('knows', function (Blueprint $table) {
             $table->id();
-            $table->integer("id_visit");
+            $table->integer("visit_id");
             $table->string("nama");
             $table->string("jabatan");
             $table->timestamps();
