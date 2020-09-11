@@ -19,27 +19,27 @@
     </div>--}}
     <div class="form-group">
         <label for="namakegiatan">Nama Kegiatan</label>
-        <input type="text" class="form-control" id="namakegiatan" @if(isset($visit)) value="{{$visit->namakegiatan}}" @endif name="namakegiatan" placeholder="Berkunjung ke ...">
+        <input type="text" required class="form-control" id="namakegiatan" @if(isset($visit)) value="{{$visit->namakegiatan}}" @endif name="namakegiatan" placeholder="Berkunjung ke ...">
     </div>
     <div class="form-group">
         <label for="tujuan">Tujuan</label>
-        <textarea class="form-control" id="tujuan" name="tujuan" rows="6">@if(isset($visit)){{$visit->tujuan}}@endif</textarea>
+        <textarea class="form-control" required id="tujuan" name="tujuan" rows="6">@if(isset($visit)){{$visit->tujuan}}@endif</textarea>
     </div>
     <div class="form-group">
         <label for="dasar">Dasar Kegiatan</label>
-        <textarea class="form-control" id="dasar" name="dasar" rows="6">@if(isset($visit)){{$visit->dasar}}@endif</textarea>
+        <textarea class="form-control" required id="dasar" name="dasar" rows="6">@if(isset($visit)){{$visit->dasar}}@endif</textarea>
     </div>
 
     <div class="form-group">
         <label for="tanggal">Hari & Tanggal (Dari)</label>
-        <input type="date" class="form-control" id="tanggal" @if(isset($visit)) value="{{$visit->tanggal}}" @endif name="tanggal">
+        <input type="date" class="form-control" required id="tanggal" @if(isset($visit)) value="{{$visit->tanggal}}" @endif name="tanggal">
         @if(isset($visit))
         <small>{{Carbon\Carbon::parse($visit->tanggal)->translatedFormat('l, d F Y')}}</small>
         @endif
     </div>
     <div class="form-group">
         <label for="tanggalend">Hari & Tanggal (Sampai)</label>
-        <input type="date" class="form-control" id="tanggalend" @if(isset($visit)) value="{{$visit->tanggalend}}" @endif name="tanggalend">
+        <input type="date" class="form-control" required id="tanggalend" @if(isset($visit)) value="{{$visit->tanggalend}}" @endif name="tanggalend">
         @if(isset($visit))
         <small>{{Carbon\Carbon::parse($visit->tanggalend)->translatedFormat('l, d F Y')}}</small>
         @endif
@@ -56,7 +56,7 @@
             @if(!isset($visit))
 
             <tr>
-                <td><input type="text" name="addmore[0][nama]" placeholder="Iswanto" class="form-control" /></td>
+                <td><input  type="text" name="addmore[0][nama]" placeholder="Iswanto" class="form-control" /></td>
                 <td><input type="text" name="addmore[0][nip]" placeholder="7847283" class="form-control" /></td>
                 <td><input type="text" name="addmore[0][jabatan]" placeholder="Staff Operasional" class="form-control" /></td>
                 <td><button type="button" name="add" id="add" class="btn btn-success"><i class="fas fa-plus-circle"></i></button></td>
@@ -100,11 +100,11 @@
     </div>
     <div class="form-group">
         <label for="tempat">Tempat</label>
-        <input type="text" class="form-control" id="tempat" @if(isset($visit)) value="{{$visit->tempat}}" @endif name="tempat">
+        <input type="text" class="form-control" required id="tempat" @if(isset($visit)) value="{{$visit->tempat}}" @endif name="tempat">
     </div>
     <div class="form-group">
         <label for="hasil">Hasil Kegiatan</label>
-        <textarea class="form-control" name="hasil" id="hasil" rows="6">@if(isset($visit)){{$visit->hasil}}@endif</textarea>
+        <textarea class="form-control" required name="hasil" id="hasil" rows="6">@if(isset($visit)){{$visit->hasil}}@endif</textarea>
     </div>
     @if(isset($visit->photos))
     <div class="container container-fluid">
@@ -130,29 +130,29 @@
     
 <div class="form-group">
     <label for="penutup">Penutup</label>
-    <textarea class="form-control" name="penutup" id="penutup" rows="6">@if(isset($visit)){{$visit->penutup}}@endif</textarea>
+    <textarea class="form-control" required name="penutup" id="penutup" rows="6">@if(isset($visit)){{$visit->penutup}}@endif</textarea>
 </div>
 <hr>
 </hr>
 <div class="form-group">
     <h5>Mengetahui</h5>
     <label for="mengetahuinama">Nama</label>
-    <input type="text" class="form-control" id="mengetahuinama" @if(isset($visit)) value="{{$visit->knows->nama}}" @endif name="mengetahuinama">
+    <input type="text" class="form-control" required id="mengetahuinama" @if(isset($visit)) value="{{$visit->knows->nama}}" @endif name="mengetahuinama">
 </div>
 <div class="form-group">
     <label for="mengetahuijabatan">Jabatan</label>
-    <input type="text" class="form-control" id="mengetahuijabatan" @if(isset($visit)) value="{{$visit->knows->jabatan}}" @endif name="mengetahuijabatan">
+    <input type="text" class="form-control" required id="mengetahuijabatan" @if(isset($visit)) value="{{$visit->knows->jabatan}}" @endif name="mengetahuijabatan">
 </div>
 <hr>
 </hr>
 <div class="form-group">
     <h5>Yang Melaporkan</h5>
     <label for="melaporkannama">Nama</label>
-    <input type="text" class="form-control" id="melaporkannama" @if(isset($visit)) value="{{$visit->reporters->nama}}" @endif name="melaporkannama">
+    <input type="text" class="form-control" required id="melaporkannama" @if(isset($visit)) value="{{$visit->reporters->nama}}" @endif name="melaporkannama">
 </div>
 <div class="form-group">
     <label for="melaporkanjabatan">Jabatan</label>
-    <input type="text" class="form-control" id="melaporkanjabatan" @if(isset($visit)) value="{{$visit->reporters->jabatan}}" @endif name="melaporkanjabatan">
+    <input type="text" class="form-control" required id="melaporkanjabatan" @if(isset($visit)) value="{{$visit->reporters->jabatan}}" @endif name="melaporkanjabatan">
 </div>
 <hr>
 </hr>
