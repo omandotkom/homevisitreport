@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpWord\SimpleType\TextAlignment;
+use PHPOffice\PhpWord\Style;
+use PhpOffice\PhpWord\Writer\Word2007\Element\ParagraphAlignment;
 
 class ReportController extends Controller
 {
@@ -45,7 +49,7 @@ class ReportController extends Controller
     public function store(Request $request)
     {
 
-       
+
         $visit = new Visit();
         $visit = $this->save($visit, $request);
         foreach ($request->addmore as $key => $value) {
@@ -85,7 +89,6 @@ class ReportController extends Controller
     public function edit($id)
     {
         $visit = Visit::findOrFail($id);
-        
         return view('reportform', ['edit' => true, 'visit' => $visit]);
     }
 
@@ -112,14 +115,15 @@ class ReportController extends Controller
 
 
         $visit->save();
-        if (isset($request->foto)){
-        foreach ($request->foto as $foto) {
-            $fotoPath = $foto->store("upload", "public");
-            $fotodb = new Photo();
-            $fotodb->visit_id = $visit->id;
-            $fotodb->photo = $fotoPath;
-            $fotodb->save();
-        }}
+        if (isset($request->foto)) {
+            foreach ($request->foto as $foto) {
+                $fotoPath = $foto->store("upload", "public");
+                $fotodb = new Photo();
+                $fotodb->visit_id = $visit->id;
+                $fotodb->photo = $fotoPath;
+                $fotodb->save();
+            }
+        }
         return $visit;
     }
     public function update(Request $request, $id)
@@ -156,10 +160,9 @@ class ReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    { }
+    public function photoDestroy($id)
     {
-        
-    }
-    public function photoDestroy($id){
         $foto = Photo::findOrFail($id);
         $foto->delete();
 
@@ -185,14 +188,6 @@ class ReportController extends Controller
         Log::debug(URL::to('/'));
 
         $visit = Visit::findOrFail($id);
-        if ($visit->foto === null) {
-            $fotoexists = false;
-        } else {
-            $fotoexists = true;
-        }
-        $ext = pathinfo(public_path($visit->foto), PATHINFO_EXTENSION);
-        $image = file_get_contents(public_path($visit->foto));
-        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($image);
         // return response(public_path($visit->foto));
         // $pdf = PDF::loadView('print', ['visit' => $visit, 'foto' => $base64, 'fotoexist' => $fotoexists]);
         //return $pdf->stream('document.pdf');
@@ -206,34 +201,34 @@ class ReportController extends Controller
         $newSection->addText($title, array('name' => 'Times New Roman', 'bold' => true, 'size' => 20, 'color' => 'black', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 20));
         $newSection->addText($title2, array('name' => 'Times New Roman', 'bold' => true, 'size' => 20, 'color' => 'black', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 700));
 
-        $paragraphStyleName = 'P-Style';
+        $paragraphStyleName = 'PStyle';
+        $wordTest->addParagraphStyle($paragraphStyleName, array('alignment'=> \PhpOffice\PhpWord\SimpleType\Jc::BOTH, 'spaceAfter' => 100));
         $ONETAB = 'ONETAB';
         $wordTest->addParagraphStyle($ONETAB, array('tabs' => array(new \PhpOffice\PhpWord\Style\Tab('right', 9090))));
         $predefinedMultilevelStyle = array('listType' => \PhpOffice\PhpWord\Style\ListItem::TYPE_ALPHANUM, 'format' => 'upperLetter');
         $fontStyleName = 'myOwnStyle';
         $wordTest->addFontStyle($fontStyleName, array('name' => 'Times New Roman', 'bold' => true, 'size' => 12, 'color' => 'black'));
-
+       
         $fontStyleName2 = 'myOwnStyle2';
         $wordTest->addFontStyle($fontStyleName, array('name' => 'Times New Roman', 'size' => 12, 'color' => 'black'));
 
 
         $newSection->addText("A. NAMA KEGIATAN", $fontStyleName);
-        $newSection->addText($visit->nama, $fontStyleName2);
+        $newSection->addText($visit->namakegiatan, array('name' => 'Times New Roman', 'size' => 12),$paragraphStyleName);
         $newSection->addText("B. TUJUAN", $fontStyleName);
-        $newSection->addText("Adapun tujuan dari kegiatan tersebut adalah : ", $fontStyleName2);
+        $newSection->addText("Adapun tujuan dari kegiatan tersebut adalah : ", array('name' => 'Times New Roman', 'size' => 12));
         $tujuans = preg_split('/\r\n|[\r\n]/', $visit->tujuan);
         foreach ($tujuans as $t) {
-            $newSection->addListItem($t, 0, $fontStyleName2, $predefinedMultilevelStyle, $paragraphStyleName);
+            $newSection->addListItem($t, 0, array('name' => 'Times New Roman', 'size' => 12), $predefinedMultilevelStyle,$paragraphStyleName);
         }
         $newSection->addText("C. DASAR KEGIATAN", $fontStyleName);
-        $newSection->addText($visit->namakegiatan, $fontStyleName2);
+        $newSection->addText($visit->dasar, array('name' => 'Times New Roman', 'size' => 12),$paragraphStyleName);
         $newSection->addText("D. WAKTU DAN TEMPAT PELAKSANAAN KEGIATAN", $fontStyleName);
         Carbon::setLocale("id");
-        $carbon = new Carbon($visit->tanggal);
 
-        $date = $carbon->format('l, d F Y');
-        $newSection->addText("Hari dan Tanggal : " . $date, $fontStyleName2);
-        $newSection->addText("Tempat : " . $visit->tempat, $fontStyleName2);
+
+        $newSection->addText("Hari dan Tanggal : " . Carbon::parse($visit->tanggal)->translatedFormat('l, d F Y') . " - " . Carbon::parse($visit->tanggalend)->translatedFormat('l, d F Y'),array('name' => 'Times New Roman', 'size' => 12),$paragraphStyleName);
+        $newSection->addText("Tempat : " . $visit->tempat, array('name' => 'Times New Roman', 'size' => 12),$paragraphStyleName);
         $newSection->addText("E. PETUGAS PELAKSANA", $fontStyleName);
 
         $fancyTableStyleName = 'Fancy Table';
@@ -261,33 +256,75 @@ class ReportController extends Controller
         $hasils = preg_split('/\r\n|[\r\n]/', $visit->hasil);
         $predefinedMultilevelStyle2 = array('listType' => \PhpOffice\PhpWord\Style\ListItem::TYPE_NUMBER, 'format' => 'upperLetter');
         foreach ($hasils as $hasil) {
-            $newSection->addListItem($hasil, 0, $fontStyleName2, $predefinedMultilevelStyle2, $paragraphStyleName);
+            $newSection->addListItem($hasil, 0, array('name' => 'Times New Roman', 'size' => 12), $predefinedMultilevelStyle2, $paragraphStyleName);
         }
         $newSection->addText("G. LAMPIRAN FOTO KEGIATAN", $fontStyleName);
         $fancyTableStyleName = 'FOTO_TBLE';
-        $fancyTableStyle = array('borderSize' => 0, 'cellMargin' => 5, 'width' => 100, 'unit' => 'pct',  'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 10);
+        $fancyTableStyle = array('borderSize' => 0, 'cellMargin' => 5, 'width' => 100, 'unit' => 'pct',  'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 10);
         $fancyTableFirstRowStyle = array('borderBottomSize' => 1);
         $fancyTableCellStyle = array('valign' => 'center');
         $fancyTableFontStyle = array('bold' => true);
         $wordTest->addTableStyle($fancyTableStyleName, $fancyTableStyle, $fancyTableFirstRowStyle);
         $table = $newSection->addTable($fancyTableStyleName);
-        $table->addRow(210);
-        $table->addCell(210, $fancyTableCellStyle)->addImage(public_path($visit->foto), array('width' => 210, 'height' => 210, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER));
-        $table->addCell(210, $fancyTableCellStyle)->addImage(public_path($visit->foto2), array('width' => 210, 'height' => 210, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER));
 
 
+        foreach ($visit->photos as $p) {
+            $table->addRow(300);
+
+            $table->addCell(300, $fancyTableCellStyle)->addImage(Storage::disk('public')->get($p->photo), array('width' => 300, 'height' => 300, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER));
+        }
+        $newSection->addTextBreak(1);
+        $newSection->addText("H. PENUTUP", $fontStyleName);
+        $newSection->addText($visit->penutup, $fontStyleName2);
+
+        $sectionStyle = $newSection->getStyle();
+        $sectionStyle->setMarginLeft(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((3)));
+
+        $newSection->addTextBreak(2);
+        $table = $newSection->addTable(array('width' => 67 * 67, 'unit' => 'pct'));
+        $table->addRow();
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)));
+        $table->addCell()->addText("Dibuat : ..................", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT));
+        $table->addRow();
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)));
+        $table->addCell()->addText("Pada Tanggal : " . Carbon::now()->translatedFormat('l, d F Y'), array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT));
+        $table->addRow();
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
+
+        $table->addRow();
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("Mengetahui :", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("Yang Melaporkan", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
+        $table->addRow();
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("Jabatan", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("Jabatan ", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
+        $table->addRow();
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
+        $table->addRow();
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
+        $table->addRow();
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText($visit->knows->nama, array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText($visit->reporters->nama, array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
+
+        //$table->addCell(210, $fancyTableCellStyle)->addImage(public_path($visit->foto2), array('width' => 210, 'height' => 210, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER));
+
+        /*$table = $newSection->addTable($fancyTableStyleName);
+        $table->addRow(300);
+        */
 
         //$newSection->addListItem("Nama Kegiatan", [$depth], [$fontStyle], [$listStyle], [$paragraphStyle]);
         // $newSection->addText($desc1, array('name' => 'Tahoma', 'size' => 15, 'color' => 'red'));
 
         $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($wordTest, 'Word2007');
         try {
-            $objectWriter->save(storage_path('TestWordFile.docx'));
+            $objectWriter->save(storage_path('Laporan.docx'));
         } catch (Exception $e) {
 
             return response($e);
         }
-        return response()->download(storage_path('TestWordFile.docx'));
+        return response()->download(storage_path('Laporan.docx'));
         //return response(200);
     }
 }
