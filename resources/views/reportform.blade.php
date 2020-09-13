@@ -137,22 +137,22 @@
 <div class="form-group">
     <h5>Mengetahui</h5>
     <label for="mengetahuinama">Nama</label>
-    <input type="text" class="form-control" required id="mengetahuinama" @if(isset($visit->knows)) value="{{$visit->knows->nama}}" @endif name="mengetahuinama">
+    <input type="text" class="form-control"  id="mengetahuinama" @if(isset($visit->knows)) value="{{$visit->knows->nama}}" @endif name="mengetahuinama">
 </div>
 <div class="form-group">
     <label for="mengetahuijabatan">Jabatan</label>
-    <input type="text" class="form-control" required id="mengetahuijabatan" @if(isset($visit->knows)) value="{{$visit->knows->jabatan}}" @endif name="mengetahuijabatan">
+    <input type="text" class="form-control"  id="mengetahuijabatan" @if(isset($visit->knows)) value="{{$visit->knows->jabatan}}" @endif name="mengetahuijabatan">
 </div>
 <hr>
 </hr>
 <div class="form-group">
     <h5>Yang Melaporkan</h5>
     <label for="melaporkannama">Nama</label>
-    <input type="text" class="form-control" required id="melaporkannama" @if(isset($visit->reporters)) value="{{$visit->reporters->nama}}" @endif name="melaporkannama">
+    <input type="text" class="form-control"  id="melaporkannama" @if(isset($visit->reporters)) value="{{$visit->reporters->nama}}" @endif name="melaporkannama">
 </div>
 <div class="form-group">
     <label for="melaporkanjabatan">Jabatan</label>
-    <input type="text" class="form-control" required id="melaporkanjabatan" @if(isset($visit->reporters)) value="{{$visit->reporters->jabatan}}" @endif name="melaporkanjabatan">
+    <input type="text" class="form-control"  id="melaporkanjabatan" @if(isset($visit->reporters)) value="{{$visit->reporters->jabatan}}" @endif name="melaporkanjabatan">
 </div>
 <hr>
 </hr>

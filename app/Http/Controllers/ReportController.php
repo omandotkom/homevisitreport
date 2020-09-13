@@ -58,17 +58,20 @@ class ReportController extends Controller
             // Log::debug($value["nama"]);
             Officer::create($value);
         }
+        if (isset($request->mengetahuinama) && isset($request->mengetahuijabatan)){
         $know = new Know();
         $know->visit_id = $visit->id;
         $know->nama = $request->mengetahuinama;
         $know->jabatan = $request->mengetahuijabatan;
         $know->save();
+        }
+        if (isset($request->melaporkannama) && isset($request->melaporkanjabatan)){
         $rep = new Reporter();
         $rep->visit_id = $visit->id;
         $rep->nama = $request->melaporkannama;
         $rep->jabatan = $request->melaporkanjabatan;
         $rep->save();
-
+        }
         return redirect()->route('list-laporan');
     }
 
@@ -140,11 +143,17 @@ class ReportController extends Controller
             Officer::create($value);
         }
         $know = Know::where('visit_id', $visit->id)->first();
+        if ($know === null){
+            $know = new Know();
+        }
         $know->visit_id = $visit->id;
         $know->nama = $request->mengetahuinama;
         $know->jabatan = $request->mengetahuijabatan;
         $know->save();
         $rep = Reporter::where('visit_id', $visit->id)->first();
+        if ($rep === null){
+            $rep = new Reporter();
+        }
         $rep->visit_id = $visit->id;
         $rep->nama = $request->melaporkannama;
         $rep->jabatan = $request->melaporkanjabatan;
