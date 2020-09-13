@@ -296,8 +296,8 @@ class ReportController extends Controller
         $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("Mengetahui :", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
         $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("Yang Melaporkan", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
         $table->addRow();
-        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("Jabatan", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
-        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("Jabatan ", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText($visit->knows->jabatan, array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
+        $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText($visit->reporters->jabatan, array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
         $table->addRow();
         $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START));
         $table->addCell(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((5)))->addText("", array("bold" => true, "name" => "Times New Roman", "size" => 12), array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
