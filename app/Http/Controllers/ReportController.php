@@ -244,7 +244,7 @@ class ReportController extends Controller
         $fancyTableStyle = array('borderSize' => 1, 'cellMargin' => 5,  'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 0);
         $fancyTableFirstRowStyle = array('borderBottomSize' => 1);
         $fancyTableCellStyle = array('valign' => 'center');
-        $fancyTableFontStyle = array('bold' => true);
+        $fancyTableFontStyle = array('bold' => true,'name'=>'Times New Roman','size'=>12);
         $wordTest->addTableStyle($fancyTableStyleName, $fancyTableStyle, $fancyTableFirstRowStyle);
         $table = $newSection->addTable($fancyTableStyleName);
         $table->addRow(300);
@@ -255,10 +255,10 @@ class ReportController extends Controller
         $officerIndex = 1;
         foreach ($visit->officers as $officer) {
             $table->addRow(300);
-            $table->addCell(500)->addText(" " . $officerIndex);
-            $table->addCell(2000)->addText(" " . $officer->nama);
-            $table->addCell(2000)->addText(" " . $officer->nip);
-            $table->addCell(2000)->addText(" " . $officer->jabatan);
+            $table->addCell(500)->addText(" " . $officerIndex,array('name' => 'Times New Roman', 'size' => 12));
+            $table->addCell(2000)->addText(" " . $officer->nama,array('name' => 'Times New Roman', 'size' => 12));
+            $table->addCell(2000)->addText(" " . $officer->nip,array('name' => 'Times New Roman', 'size' => 12));
+            $table->addCell(2000)->addText(" " . $officer->jabatan,array('name' => 'Times New Roman', 'size' => 12));
             $officerIndex++;
         }
         $newSection->addText("F. HASIL", $fontStyleName);
@@ -284,7 +284,7 @@ class ReportController extends Controller
         }
         $newSection->addTextBreak(1);
         $newSection->addText("H. PENUTUP", $fontStyleName);
-        $newSection->addText($visit->penutup, $fontStyleName2);
+        $newSection->addText($visit->penutup, array('name' => 'Times New Roman', 'size' => 12));
 
         $sectionStyle = $newSection->getStyle();
         $sectionStyle->setMarginLeft(\PhpOffice\PhpWord\Shared\Converter::cmToTwip((3)));
